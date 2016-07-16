@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir=".." name="netbeans">
+    <property name="javajar.global.debug" value="true" />
+    <target name="debug-nb" depends="compile" if="javajar.project.mainclass">
+        <nbjpdastart addressproperty="jpda.address" name="${ant.project.name}" transport="dt_socket">
+            <classpath refid="javajar.source.classpath"/>
+        </nbjpdastart>
+        <java classname="${javajar.project.mainclass}" classpath="${javajar.output.class}" classpathref="javajar.source.classpath">
+            <jvmarg value="-Xdebug"/>
+            <jvmarg value="-Xrunjdwp:transport=dt_socket,address=${jpda.address}"/>
+        </java>
+    </target>
+    <import file="../build.xml"/>
+</project>

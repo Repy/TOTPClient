@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="TOTPClient" basedir="." default="static" xmlns:ivy="antlib:org.apache.ivy.ant">
+	<taskdef classpath="../ivy-2.4.0.jar" resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" />
+	<property name="javajar.project.mainclass" value="info.repy.totp.TOTPClient" />
+
+	<target name="ivy">
+		<ivy:retrieve type="jar" pattern="lib/[artifact]-[revision].[ext]" />
+	</target>
+
+	<target name="depend-lib">
+	</target>
+
+	<target name="static" depends="jar-fx">
+	</target>
+
+	<import file="../build-jar.xml"/>
+</project>

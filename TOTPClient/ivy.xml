@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+	<info organisation="info.repy" module="totp"/>
+	<dependencies>
+		<dependency org="org.jboss.aerogear" name="aerogear-otp-java" rev="[1.0,)" conf="default->default"/>
+	</dependencies>
+</ivy-module>

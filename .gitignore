@@ -1,0 +1,7 @@
+
+*/depends
+*/dist
+*/bin
+*/nbproject/private/
+ivy-*.jar
+TOTPClient/setting.properties
