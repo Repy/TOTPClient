@@ -45,6 +45,7 @@ public class FormController implements Initializable {
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
 		config = new Properties();
+		System.out.println(new File("setting.properties").getAbsolutePath());
 		try (InputStream inputStream = new FileInputStream(new File("setting.properties"))) {
 			config.load(inputStream);
 			for (String name : config.stringPropertyNames()) {

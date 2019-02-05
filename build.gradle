@@ -1,0 +1,39 @@
+
+plugins {
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.7'
+    id 'org.beryx.jlink' version '2.4.2'
+}
+
+group 'info.repy'
+version '1.0-SNAPSHOT'
+
+mainClassName = "info.repy.totp/info.repy.totp.TOTPClient"
+
+repositories {
+    mavenCentral()
+}
+
+javafx {
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
+}
+
+run{
+    //jvmArgs = ['--limit-modules','java.base,javafx.controls,javafx.fxml,org.json,jdk.crypto.cryptoki']
+}
+
+jlink {
+    options = ['--compress', '2', '--no-header-files', '--no-man-pages','--add-modules','java.base']
+    launcher {
+        name = 'TOTPClient'
+    }
+}
+
+dependencies {
+    implementation group: 'org.jboss.aerogear', name:'aerogear-otp-java', version: '1.0.+'
+}
+
+task buildZip(type: Zip,dependsOn: jlinkZip) {
+    from zipTree(tasks.jlinkZip.imageZip)
+    from "scripts"
+}

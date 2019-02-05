@@ -25,7 +25,7 @@ public class TOTPClient extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		stage = primaryStage;
 		stage.setTitle("TOTPClient");
-		stage.setScene(new Scene(FXMLLoader.load(getClass().getResource("Form.fxml"))));
+		stage.setScene(new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("Form.fxml"))));
 		stage.show();
 	}
 

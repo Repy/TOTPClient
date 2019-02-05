@@ -1,7 +1,6 @@
+/.idea/
+/setting.properties
+/.gradle/
+/build/
 
-*/depends
-*/dist
-*/bin
-*/nbproject/private/
-ivy-*.jar
-TOTPClient/setting.properties
+out/
