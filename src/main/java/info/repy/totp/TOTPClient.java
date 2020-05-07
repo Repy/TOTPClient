@@ -8,6 +8,7 @@ package info.repy.totp;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 /**
@@ -19,11 +20,9 @@ public class TOTPClient extends Application {
 		launch(args);
 	}
 
-	private Stage stage;
-
 	@Override
-	public void start(Stage primaryStage) throws Exception {
-		stage = primaryStage;
+	public void start(Stage stage) throws Exception {
+		stage.getIcons().add(new Image(TOTPClient.class.getResourceAsStream("/icon.png")));
 		stage.setTitle("TOTPClient");
 		stage.setScene(new Scene(FXMLLoader.load(getClass().getClassLoader().getResource("Form.fxml"))));
 		stage.show();
