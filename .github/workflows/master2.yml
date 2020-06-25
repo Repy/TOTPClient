@@ -38,12 +38,12 @@ jobs:
       - name: "Native Image"
         shell: cmd
         run: |
-          native-image --class-path "totp-1.0-SNAPSHOT\totp-1.0-SNAPSHOT\lib\*" "info.repy.totp.TOTPClient"
+          native-image -H:Name=totp --class-path "totp-1.0-SNAPSHOT\totp-1.0-SNAPSHOT\lib\*" "info.repy.totp.TOTPClient"
       - name: "Upload Windows build"
         uses: "actions/upload-artifact@v1"
         with:
           name: "windows"
-          path: "TOTPClient.exe"
+          path: "totp.exe"
 
   job_mac:
     name: "Build for Mac"
