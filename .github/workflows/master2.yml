@@ -17,21 +17,26 @@ jobs:
     steps:
       - name: "Git Clone"
         uses: "actions/checkout@v2"
-      - name: "Setup JDK"
-        uses: "actions/setup-java@v1"
+      - name: "Setup GraalVM"
+        uses: "DeLaGuardo/setup-graalvm@3"
         with:
-          java-version: "11"
-          architecture: "x64"
-      - name: "Gradle Windows"
+          graalvm-version: "20.1.0.java11"
+      - name: "Setup Native Image"
         shell: cmd
         run: |
-          gradlew.bat buildWindows
-      - name: "Upload Windows build"
-        uses: "actions/upload-artifact@v1"
-        with:
-          name: "windows"
-          path: "build/distributions/TOTPClient.zip"
-
+          gu install native-image
+      - name: "Gradle build"
+        shell: cmd
+        run: |
+          gradlew.bat build
+      - name: "Expand-Archive"
+        shell: pwsh
+        run: |
+          Expand-Archive -Path build\distributions\totp-1.0-SNAPSHOT.zip
+      - name: "Native Image"
+        shell: cmd
+        run: |
+          native-image --class-path "totp-1.0-SNAPSHOT\totp-1.0-SNAPSHOT\lib\*" "info.repy.totp.TOTPClient"
 
   job_mac:
     name: "Build for Mac"
