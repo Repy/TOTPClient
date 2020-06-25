@@ -17,6 +17,8 @@ jobs:
     steps:
       - name: "Git Clone"
         uses: "actions/checkout@v2"
+      - name: "Setup Visual Studio env"
+        uses: "ilammy/msvc-dev-cmd@v1"
       - name: "Setup GraalVM"
         uses: "DeLaGuardo/setup-graalvm@3"
         with:
@@ -37,6 +39,11 @@ jobs:
         shell: cmd
         run: |
           native-image --class-path "totp-1.0-SNAPSHOT\totp-1.0-SNAPSHOT\lib\*" "info.repy.totp.TOTPClient"
+      - name: "Upload Windows build"
+        uses: "actions/upload-artifact@v1"
+        with:
+          name: "windows"
+          path: "TOTPClient.exe"
 
   job_mac:
     name: "Build for Mac"
