@@ -36,35 +36,30 @@ dependencies {
     implementation group: 'org.jboss.aerogear', name:'aerogear-otp-java', version: '1.0.+'
 }
 
-task buildWindows(type: Zip, dependsOn: jlinkZip) {
+task buildWindows(type: Zip, dependsOn: tasks.jlink) {
     archiveName = "TOTPClient.zip"
-    from zipTree(tasks.jlinkZip.imageZip)
+    into("image") {
+        from fileTree(tasks.jlink.imageDir)
+    }
     from "scripts/windows/TOTPClient.bat"
 }
 
-task buildMacDir(dependsOn: jlinkZip) {
-    doLast {
-        delete fileTree('build/macapp')
-        copy {
-            from fileTree("scripts/mac")
-            into 'build/macapp/TOTPClient.app'
-        }
-        copy {
-            from zipTree(tasks.jlinkZip.imageZip)
-            into 'build/macapp/TOTPClient.app/Contents/MacOS'
+task buildMac(type: Tar, dependsOn: tasks.jlink) {
+    compression = Compression.GZIP
+    archiveName = "TOTPClient.tar.gz"
+    into("TOTPClient.app"){
+        from fileTree("scripts/mac")
+        into("Contents/MacOS/image"){
+            from fileTree(tasks.jlink.imageDir)
         }
     }
 }
 
-task buildMac(type: Tar, dependsOn: buildMacDir) {
+task buildLinux(type: Tar, dependsOn: tasks.jlink) {
     compression = Compression.GZIP
     archiveName = "TOTPClient.tar.gz"
-    from 'build/macapp'
-}
-
-task buildLinux(type: Tar, dependsOn: jlinkZip) {
-    compression = Compression.GZIP
-    archiveName = "TOTPClient.tar.gz"
-    from zipTree(tasks.jlinkZip.imageZip)
+    into("image") {
+        from fileTree(tasks.jlink.imageDir)
+    }
     from "scripts/linux/TOTPClient.sh"
 }
