@@ -1,12 +1,16 @@
-name: "Release"
+name: "build"
 
 on:
   push:
+    branches:
+      - "master"
+      - "feature/*"
     tags:
-      - 'v*'
+      - '*'
   pull_request:
-    tags:
-      - 'v*'
+    branches:
+      - "master"
+      - "feature/*"
 
 jobs:
   job_windows:
@@ -80,6 +84,7 @@ jobs:
       - job_mac
       - job_linux
     runs-on: 'ubuntu-latest'
+    if: "contains(github.ref, 'tags/')"
     steps:
       - name: "Download all build"
         uses: "actions/download-artifact@v2"
